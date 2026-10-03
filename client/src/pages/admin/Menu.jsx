@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useQuery, useMutation, useQueryClient } from 'react-query';
-import api from '../../utils/api';
+import api, { resolveImageUrl } from '../../utils/api';
 
 // ─── Icon options for categories ──────────────────────────────────────────────
 const ICON_OPTIONS = [
@@ -464,11 +464,11 @@ function ProductManager() {
     if (confirm(`Supprimer "${p.name}" ?`)) deleteMutation.mutate(p.id);
   };
 
-  // Resolve image src — local blob, server path, or external URL
+  // blob: URLs come from URL.createObjectURL — pass through as-is
   const resolveImage = (url) => {
     if (!url) return null;
-    if (url.startsWith('blob:') || url.startsWith('http')) return url;
-    return url; // relative path like /uploads/products/xxx.jpg served by express
+    if (url.startsWith('blob:')) return url;
+    return resolveImageUrl(url);
   };
 
   return (

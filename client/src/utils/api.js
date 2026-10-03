@@ -1,5 +1,25 @@
 const API_URL = import.meta.env.VITE_API_URL || '/api';
 
+// Derives the server base (scheme + host + port) from API_URL.
+// e.g. "http://localhost:3000/api" → "http://localhost:3000"
+//      "/api" (relative, dev proxy)  → "" (keep paths relative)
+const SERVER_BASE = API_URL.startsWith('http')
+  ? API_URL.replace(/\/api$/, '')
+  : '';
+
+/**
+ * Resolves a stored imageUrl to a fully usable src.
+ * - /uploads/... paths  → prefixed with SERVER_BASE so they hit Express
+ * - http(s):// URLs     → returned as-is (external or legacy Unsplash)
+ * - empty / null        → returns null (caller shows placeholder)
+ */
+export function resolveImageUrl(imageUrl) {
+  if (!imageUrl) return null;
+  if (imageUrl.startsWith('http')) return imageUrl;
+  if (imageUrl.startsWith('/uploads')) return `${SERVER_BASE}${imageUrl}`;
+  return imageUrl;
+}
+
 class ApiError extends Error {
   constructor(message, status, data) {
     super(message);

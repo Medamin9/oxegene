@@ -1,5 +1,6 @@
 import React from 'react';
 import useScrollReveal from '../../hooks/useScrollReveal';
+import { resolveImageUrl } from '../../utils/api';
 
 function ProductCard({ product, onClick, index = 0 }) {
   const [cardRef, isVisible] = useScrollReveal({
@@ -8,14 +9,13 @@ function ProductCard({ product, onClick, index = 0 }) {
   });
 
   const staggerDelay = `${(index % 4) * 80}ms`;
+  const imgSrc = resolveImageUrl(product.imageUrl);
 
   return (
     <div
       ref={cardRef}
       onClick={onClick}
-      style={{
-        transitionDelay: isVisible ? staggerDelay : '0ms',
-      }}
+      style={{ transitionDelay: isVisible ? staggerDelay : '0ms' }}
       className={`group cursor-pointer rounded-xl glass-effect card-hover-lift flex flex-col justify-between shadow-elevation-1 p-5 border border-white/5 hover:border-primary-container/40 transition-all duration-500 ${
         isVisible
           ? 'opacity-100 translate-y-0 scale-100'
@@ -23,11 +23,11 @@ function ProductCard({ product, onClick, index = 0 }) {
       }`}
     >
       <div className="space-y-4">
-        <div className="relative w-full h-48 rounded-md overflow-hidden bg-surface-container-lowest">
-          {product.imageUrl ? (
+        <div className="relative w-full h-48 rounded-md overflow-hidden">
+          {imgSrc ? (
             <img
               className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-              src={product.imageUrl}
+              src={imgSrc}
               alt={product.imageAlt || product.name}
               loading="lazy"
               onError={(e) => {
@@ -38,7 +38,7 @@ function ProductCard({ product, onClick, index = 0 }) {
           ) : null}
           <div
             className="w-full h-full items-center justify-center bg-surface-container-high"
-            style={{ display: product.imageUrl ? 'none' : 'flex' }}
+            style={{ display: imgSrc ? 'none' : 'flex' }}
           >
             <span className="material-symbols-outlined text-[56px] text-on-surface-variant opacity-20">
               local_cafe
@@ -49,7 +49,7 @@ function ProductCard({ product, onClick, index = 0 }) {
               Meilleure Vente
             </span>
           )}
-          {product.isSpecialty && (
+          {product.isSpecialty && !product.isBestSeller && (
             <span className="absolute top-3 left-3 px-2.5 py-1 rounded-full bg-secondary-container text-on-secondary-container font-label-sm text-label-sm font-bold shadow-md">
               Spécialité
             </span>
