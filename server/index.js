@@ -6,6 +6,7 @@ import rateLimit from 'express-rate-limit';
 import dotenv from 'dotenv';
 import path from 'path';
 import { fileURLToPath } from 'url';
+import fs from 'fs';
 
 // Import routes
 import authRoutes from './routes/auth.js';
@@ -68,11 +69,25 @@ app.get('/api/health', (req, res) => {
   res.json({ status: 'OK', timestamp: new Date().toISOString() });
 });
 
-// Serve static files in production
-if (process.env.NODE_ENV === 'production') {
-  app.use(express.static(path.join(__dirname, '../dist')));
+// Root API status endpoint
+app.get('/', (req, res) => {
+  const distIndex = path.join(__dirname, '../dist/index.html');
+  if (fs.existsSync(distIndex)) {
+    return res.sendFile(distIndex);
+  }
+  res.json({
+    message: 'Oxegène Coffee API is running ☕',
+    status: 'online',
+    timestamp: new Date().toISOString(),
+  });
+});
+
+// Serve static files in production if dist exists (e.g. monolithic deployment)
+const distDir = path.join(__dirname, '../dist');
+if (fs.existsSync(distDir)) {
+  app.use(express.static(distDir));
   app.get('*', (req, res) => {
-    res.sendFile(path.join(__dirname, '../dist/index.html'));
+    res.sendFile(path.join(distDir, 'index.html'));
   });
 }
 
