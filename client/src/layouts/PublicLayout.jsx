@@ -7,9 +7,9 @@ import FloatingCartButton from '../components/public/FloatingCartButton';
 
 function PublicLayout() {
   return (
-    <div className="min-h-screen bg-surface">
+    <div className="min-h-screen bg-surface overflow-x-hidden">
       <Navbar />
-      <main className="w-full pt-20 sm:pt-24 md:pt-28 lg:pt-32 bg-surface min-h-[calc(100vh-280px)]">
+      <main className="w-full pt-16 sm:pt-20 bg-surface min-h-[calc(100vh-280px)]">
         <Outlet />
       </main>
       <Footer />

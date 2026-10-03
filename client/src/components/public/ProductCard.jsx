@@ -16,7 +16,7 @@ function ProductCard({ product, onClick, index = 0 }) {
       style={{
         transitionDelay: isVisible ? staggerDelay : '0ms',
       }}
-      className={`group cursor-pointer rounded-xl glass-effect card-hover-lift flex flex-col justify-between overflow-hidden shadow-elevation-1 p-5 border border-white/5 hover:border-primary-container/40 transition-all duration-500 ${
+      className={`group cursor-pointer rounded-xl glass-effect card-hover-lift flex flex-col justify-between shadow-elevation-1 p-5 border border-white/5 hover:border-primary-container/40 transition-all duration-500 ${
         isVisible
           ? 'opacity-100 translate-y-0 scale-100'
           : 'opacity-0 translate-y-8 scale-[0.96] pointer-events-none'

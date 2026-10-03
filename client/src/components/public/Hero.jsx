@@ -9,7 +9,7 @@ function Hero() {
   const { data } = useQuery('content', api.getContent);
   const { orderMode, setOrderMode, tableNumber, setTableNumber } = useCart();
   const [heroRef, isVisible] = useScrollReveal({ threshold: 0.05 });
-  
+
   const heroContent = data?.content?.hero || {};
 
   const openCartDrawer = () => {
@@ -20,14 +20,13 @@ function Hero() {
   return (
     <section
       ref={heroRef}
-      className={`w-full max-w-7xl mx-auto px-6 lg:px-12 py-space-lg transition-all duration-700 ${
-        isVisible ? 'opacity-100 translate-y-0 scale-100' : 'opacity-0 translate-y-8 scale-[0.98]'
-      }`}
+      className={`w-full max-w-7xl mx-auto mt-16 px-6 lg:px-12 pt-space-lg pb-4 transition-all duration-700 ${isVisible ? 'opacity-100 translate-y-0 scale-100' : 'opacity-0 translate-y-8 scale-[0.98]'
+        }`}
     >
       <div className="relative overflow-hidden rounded-xl bg-gradient-to-br from-surface-container-high via-surface-container to-surface-container-low shadow-2xl p-8 lg:p-12 border border-white/5">
         {/* Glow effects */}
         <div className="absolute -right-20 -top-20 w-80 h-80 bg-primary-container/25 rounded-full blur-3xl pointer-events-none"></div>
-        
+
 
         <div className="relative z-10 flex flex-col lg:flex-row lg:items-center lg:justify-between gap-space-lg">
           <div className="max-w-2xl space-y-4">
@@ -62,11 +61,12 @@ function Hero() {
             </div>
           </div>
 
-          {/* Mascot */}
-          <div className="w-full lg:w-[500px] flex items-center justify-center scale-150 lg:scale-[2] animate-soft-float">
+          {/* Mascot — size set directly so getBoundingClientRect stays accurate */}
+          <div className="w-full lg:w-auto flex items-center justify-center py-4 lg:py-0">
             <Mascot
-              directions="./drone-directions.webp"
-              reactions="./drone-reactions.webp"
+              directions="/drone-directions.webp"
+              reactions="/drone-reactions.webp"
+              size={260}
             />
           </div>
         </div>

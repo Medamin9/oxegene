@@ -28,75 +28,73 @@ function Navbar() {
   const totalItems = getTotalItems();
   const total = getTotal();
 
+  const openCart = () => {
+    document.getElementById('cart-drawer-backdrop')?.classList.remove('hidden');
+    document.getElementById('cart-drawer')?.classList.remove('translate-x-full');
+  };
+
   return (
     <header
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
         isScrolled
-          ? 'bg-surface/90 backdrop-blur-2xl border-b border-primary/20 shadow-elevation-3 py-0.5 sm:py-1'
-          : 'bg-surface/80 backdrop-blur-xl border-b border-transparent py-0'
+          ? 'bg-surface/90 backdrop-blur-2xl border-b border-primary/20 shadow-elevation-3'
+          : 'bg-surface/80 backdrop-blur-xl border-b border-transparent'
       }`}
     >
-      <div
-        className={`max-w-7xl mx-auto px-3 sm:px-6 lg:px-12 flex items-center justify-between gap-2 sm:gap-4 transition-all duration-300 ${
-          isScrolled ? 'h-14 sm:h-16' : 'h-16 sm:h-20'
-        }`}
-      >
-        {/* Brand Logo & Name */}
-        <div className="flex items-center gap-2 sm:gap-4 lg:gap-space-lg min-w-0">
-          <Link to="/" className="flex items-center gap-1.5 sm:gap-space-sm group min-w-0">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-12">
+        <div
+          className={`flex items-center justify-between transition-all duration-300 ${
+            isScrolled ? 'h-14' : 'h-16 sm:h-20'
+          }`}
+        >
+          {/* ── Brand ── */}
+          <Link to="/" className="flex items-center gap-2 group min-w-0">
             <img
               alt="Oxegène Coffee Logo"
               className={`w-auto object-contain transition-all duration-300 group-hover:scale-105 shrink-0 ${
-                isScrolled ? 'h-8 sm:h-10' : 'h-9 sm:h-11 md:h-12'
+                isScrolled ? 'h-8' : 'h-9 sm:h-11'
               }`}
               src="./logob.png"
             />
-            <span className="font-headline-sm sm:font-headline-md text-headline-sm sm:text-headline-md font-bold tracking-tight text-on-surface group-hover:text-primary transition-colors truncate">
+            <span className="font-headline-sm sm:font-headline-md font-bold tracking-tight text-on-surface group-hover:text-primary transition-colors truncate">
               Oxegène
             </span>
           </Link>
 
-          {/* Desktop opening hours */}
-          <div className="hidden xl:flex items-center gap-space-xs px-3 py-1.5 rounded-full bg-surface-container-high/60 border border-white/5 shrink-0">
-            <span className="w-2 h-2 rounded-full bg-tertiary animate-pulse"></span>
-            <span className="font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider">
-              Ouvert • 07:30 - 23:00
+          {/* ── Opening badge (md+) ── */}
+          <div className="hidden md:flex items-center gap-2 px-3 py-1.5 rounded-full bg-surface-container-high/60 border border-white/5">
+            <span className="w-2 h-2 rounded-full bg-tertiary animate-pulse shrink-0"></span>
+            <span className="font-label-sm text-on-surface-variant uppercase tracking-wider whitespace-nowrap">
+              Ouvert&nbsp;•&nbsp;07:30&nbsp;-&nbsp;23:00
             </span>
           </div>
 
-          {/* Tablet compact badge */}
-          <div className="hidden md:flex xl:hidden items-center gap-1.5 px-2.5 py-1 rounded-full bg-surface-container-high/60 border border-white/5 shrink-0">
-            <span className="w-2 h-2 rounded-full bg-tertiary animate-pulse"></span>
-            <span className="font-label-sm text-label-sm text-on-surface-variant font-medium">
-              Ouvert
-            </span>
-          </div>
-        </div>
-
-        {/* Right actions: Cart */}
-        <div className="flex items-center gap-2 shrink-0">
+          {/* ── Cart button ── */}
           <button
-            onClick={() => {
-              document.getElementById('cart-drawer-backdrop')?.classList.remove('hidden');
-              document.getElementById('cart-drawer')?.classList.remove('translate-x-full');
-            }}
-            className="flex items-center gap-1.5 sm:gap-2 px-2.5 sm:px-4 py-1.5 sm:py-2.5 rounded-full bg-primary-container text-on-primary-container hover:bg-primary-container/90 hover:scale-105 active:scale-95 transition-all shadow-glow-primary shrink-0"
+            onClick={openCart}
             type="button"
             aria-label="Voir le panier"
+            className="flex items-center gap-1.5 sm:gap-2 px-3 sm:px-4 py-2 rounded-full bg-primary-container text-on-primary-container hover:bg-primary-container/90 hover:scale-105 active:scale-95 transition-all shadow-glow-primary shrink-0"
           >
-            <span className="material-symbols-outlined text-[18px] sm:text-[20px]">shopping_bag</span>
-            <span className="font-label-lg text-label-lg hidden md:inline">Panier</span>
-            <span className="px-1.5 sm:px-2 py-0.5 min-w-[18px] sm:min-w-[22px] text-center rounded-full bg-on-primary-container text-on-primary font-bold text-xs sm:text-sm">
+            <span className="material-symbols-outlined text-[20px]">shopping_bag</span>
+
+            {/* label — hidden on xs */}
+            <span className="hidden sm:inline font-label-lg">Panier</span>
+
+            {/* item count badge */}
+            <span className="flex items-center justify-center min-w-[22px] h-[22px] px-1 rounded-full bg-on-primary-container text-on-primary font-bold text-xs leading-none">
               {totalItems}
             </span>
-            <span className="border-l border-white/20 pl-1.5 sm:pl-2 font-mono text-xs sm:text-sm font-semibold whitespace-nowrap">
-              {total.toFixed(3)} <span className="hidden xs:inline text-[10px] sm:text-xs opacity-80">TND</span>
+
+            {/* price — hidden on xs, shown from sm */}
+            <span className="hidden sm:inline border-l border-white/20 pl-2 font-mono text-sm font-semibold whitespace-nowrap">
+              {total.toFixed(3)}&nbsp;<span className="text-xs opacity-80">TND</span>
             </span>
           </button>
         </div>
       </div>
 
-      {/* Scroll progress bar indicator */}
+      {/* Scroll progress bar */}
       <div
         className="absolute bottom-0 left-0 h-[2px] bg-gradient-to-r from-primary via-secondary to-tertiary transition-all duration-75 pointer-events-none"
         style={{ width: `${scrollProgress}%` }}

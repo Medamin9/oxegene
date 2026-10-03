@@ -34,7 +34,7 @@ function MenuSection({ category, onProductClick }) {
         </p>
       </div>
 
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
         {category.products.map((product, idx) => (
           <ProductCard
             key={product.id}
