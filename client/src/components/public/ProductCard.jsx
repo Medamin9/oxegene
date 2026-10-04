@@ -23,10 +23,10 @@ function ProductCard({ product, onClick, index = 0 }) {
       }`}
     >
       <div className="space-y-4">
-        <div className="relative w-full h-48 rounded-md overflow-hidden">
+        <div className="relative w-full h-48 rounded-md overflow-hidden bg-surface-container-high">
           {imgSrc ? (
             <img
-              className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+              className="w-full h-full object-contain group-hover:scale-105 transition-transform duration-500"
               src={imgSrc}
               alt={product.imageAlt || product.name}
               loading="lazy"
