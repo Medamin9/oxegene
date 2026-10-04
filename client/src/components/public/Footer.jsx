@@ -86,6 +86,17 @@ function Footer() {
 
       <div className="max-w-7xl mx-auto px-6 lg:px-12 mt-space-xl pt-space-lg flex flex-col sm:flex-row items-center justify-between text-on-surface-variant font-body-sm text-body-sm">
         <p>{footerContent.copyright}</p>
+        <p className="mt-2 sm:mt-0">
+          Développé par{' '}
+          <a
+            href="https://mohamedaminedev.vercel.app/"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-primary hover:text-secondary transition-colors font-semibold"
+          >
+            MA Solutions
+          </a>
+        </p>
         <p className="mt-2 sm:mt-0">{footerContent.tagline}</p>
       </div>
     </footer>
